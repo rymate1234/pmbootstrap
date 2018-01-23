@@ -19,6 +19,14 @@
 set -e
 DIR="$(cd "$(dirname "$0")" && pwd -P)"
 
+# Find CHANGEMEs in APKBUILDs
+if grep -qr '(CHANGEME!)' "$DIR/../aports/device"; then
+	echo "ERROR: Please replace '(CHANGEME!)' in the following files:"
+	cd "$DIR/.."
+	grep --color=always -r '(CHANGEME!)' aports/device
+	exit 1
+fi
+
 # Shell: shellcheck
 cd "$DIR"/..
 sh_files="
